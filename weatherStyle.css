@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  background-color: hsl(215, 20%, 95%);
+  margin: 0;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------- formularz ---------- */
+.weatherForm {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  margin: 0;
+}
+
+.cityInput {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 1.5px solid hsl(215, 14%, 82%);
+  border-radius: 12px;
+  margin: 0;
+  width: auto;
+}
+
+button[type="submit"] {
+  padding: 0 16px;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: hsl(130, 32%, 46%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: hsl(130, 32%, 38%);
+}
+
+/* ---------- karta ---------- */
+.card {
+  /* domyślny motyw (pochmurno); JS nadaje data-theme */
+  --g1: hsl(213, 90%, 77%);
+  --g2: hsl(75, 17%, 77%);
+  --g3: hsl(40, 87%, 74%);
+  --ink: hsla(215, 30%, 14%, 0.9);
+
+  width: 100%;
+  max-width: 340px;
+  min-width: 0;
+  padding: 28px 22px 22px;
+  background: linear-gradient(180deg, var(--g1), var(--g2), var(--g3));
+  color: var(--ink);
+  box-shadow: 0 14px 30px hsla(0, 0%, 0%, 0.25);
+  border-radius: 28px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  animation: cardIn 0.4s ease-out;
+}
+
+/* motywy pogodowe */
+.card[data-theme="clear"]    { --g1: #ffb347; --g2: #ffd966; --g3: #7ec8f5; }
+.card[data-theme="overcast"] { --g1: #8fbcf8; --g2: #c3cbbd; --g3: #f5d28b; }
+.card[data-theme="clouds"]   { --g1: #6aa9f0; --g2: #a9c9ea; --g3: #f2d9a6; }
+.card[data-theme="rain"]     { --g1: #3d5a80; --g2: #5f7f9e; --g3: #8fa9b8; --ink: #fff; }
+.card[data-theme="storm"]    { --g1: #2b2d42; --g2: #4a4e69; --g3: #8d6a9f; --ink: #fff; }
+.card[data-theme="snow"]     { --g1: #9ec5e8; --g2: #d4e6f5; --g3: #f4f8fc; }
+.card[data-theme="fog"]      { --g1: #8d8aa8; --g2: #b3b0c4; --g3: #d3d1dc; }
+
+/* wersje nocne każdego motywu (data-time="night" nadaje JS) */
+.card[data-time="night"][data-theme="clear"]    { --g1: #1b2a5c; --g2: #3b3f87; --g3: #6b5b95; --ink: #fff; }
+.card[data-time="night"][data-theme="clouds"]   { --g1: #26335c; --g2: #4a5578; --g3: #7a7f9c; --ink: #fff; }
+.card[data-time="night"][data-theme="overcast"] { --g1: #2a3148; --g2: #454c63; --g3: #646a7e; --ink: #fff; }
+.card[data-time="night"][data-theme="rain"]     { --g1: #151f33; --g2: #26364f; --g3: #3f526b; --ink: #fff; }
+.card[data-time="night"][data-theme="storm"]    { --g1: #0d0e18; --g2: #1f1c33; --g3: #3b2d55; --ink: #fff; }
+.card[data-time="night"][data-theme="snow"]     { --g1: #2a3b66; --g2: #5a6f9a; --g3: #8497b8; --ink: #fff; }
+.card[data-time="night"][data-theme="fog"]      { --g1: #2c2e44; --g2: #484b63; --g3: #6a6d84; --ink: #fff; }
+
+/* kolejność elementów w karcie (w kodzie JS jest inna) */
+.cityDisplay,
+.tempDisplay,
+.descDisplay,
+.pokeSprite {
+  flex: 0 0 100%;
+}
+
+.cityDisplay     { order: 1; }
+.tempDisplay     { order: 2; }
+.descDisplay     { order: 3; }
+.humidityDisplay { order: 4; }
+.windDisplay     { order: 4; }
+.pokeSprite      { order: 5; }
+
+h1 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.cityDisplay {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.tempDisplay {
+  font-size: 4.8rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 6px 0 0;
+  text-shadow: 0 3px 10px hsla(0, 0%, 0%, 0.2);
+}
+
+.descDisplay {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 8px;
+}
+
+/* wilgotność i wiatr jako „pigułki” */
+.humidityDisplay,
+.windDisplay {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: hsla(0, 0%, 100%, 0.4);
+  backdrop-filter: blur(6px);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.humidityDisplay::before { content: "💧 "; }
+.windDisplay::before     { content: "💨 "; }
+
+/* pokemon zamiast emotki pogody */
+.pokeSprite {
+  height: 140px;
+  width: auto;
+  object-fit: contain;
+  margin-top: 14px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 8px 6px hsla(0, 0%, 0%, 0.28));
+  animation: bob 3s ease-in-out infinite;
+}
+
+.errorDisplay {
+  flex: 0 0 100%;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+@keyframes bob {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
